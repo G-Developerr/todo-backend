@@ -1,8 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
@@ -19,6 +18,7 @@ let todos = [
 ];
 
 // Routes
+
 // ROOT route - Αρχική σελίδα
 app.get('/', (req, res) => {
     res.send(`
@@ -87,7 +87,7 @@ app.post("/api/todos", (req, res) => {
 app.put("/api/todos/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const todo = todos.find((t) => t.id === id);
-
+    
     if (todo) {
         todo.completed = req.body.completed;
         res.json(todo);
@@ -105,6 +105,5 @@ app.delete("/api/todos/:id", (req, res) => {
 
 // Ξεκίνα τον server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-
+    console.log(`Server is running on port ${PORT}`);
 });
